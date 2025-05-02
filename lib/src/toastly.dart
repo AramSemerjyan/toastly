@@ -19,17 +19,14 @@ class Toastly {
     if (animationController != null) {
       _animationController = animationController;
     } else if (vsync != null) {
-      _animationController = AnimationController(
-        vsync: vsync,
-        duration: const Duration(milliseconds: 300),
-        reverseDuration: const Duration(milliseconds: 300),
-      );
-
-      _animation =
-          CurveTween(curve: Curves.fastOutSlowIn).animate(_animationController);
+      _animationController = AnimationController(vsync: vsync);
     } else {
       throw Exception('vsync or animation controller should be set');
     }
+    _animationController.duration = const Duration(milliseconds: 300);
+    _animationController.reverseDuration = const Duration(milliseconds: 300);
+    _animation =
+        CurveTween(curve: Curves.fastOutSlowIn).animate(_animationController);
   }
 
   static void init({
