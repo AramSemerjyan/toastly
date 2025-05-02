@@ -63,7 +63,7 @@ toast.show(
 | `dismissInSeconds`      | `int?`                | Number of seconds before dismiss (if enabled)              |
 | `closeItem`             | `Widget?`             | Custom close button (top-right corner)                     |
 | `borderRadius`          | `BorderRadius?`       | Corner rounding of the toast                               |
-| `type`                  | `ToastAnimationType`  | Toast animation: `fade`, `slideUp`, `slideDown`, `scaleIn` |
+| `animationType`         | `ToastAnimationType`  | Toast animation: `fade`, `slideUp`, `slideDown`, `scaleIn` |
 | `shouldShowProgressBar` | `bool`                | Whether to show animated progress bar                      |
 | `progressBarColor`      | `Color?`              | Color of the progress bar (if shown)                       |
 | `progressBarHeight`     | `double?`             | Height of the progress bar                                 |
