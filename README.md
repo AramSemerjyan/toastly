@@ -49,6 +49,8 @@ toast.show(
 );
 ```
 
+![Screen Recording 2025-05-03 at 00 48 55](https://github.com/user-attachments/assets/181d8c1f-1aa9-40a0-a61e-b43418517736)
+
 | Field                   | Type                  | Description                                                |
 | ----------------------- | --------------------- | ---------------------------------------------------------- |
 | `message`               | `Widget`              | Main toast content                                         |
