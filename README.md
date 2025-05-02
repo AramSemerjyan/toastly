@@ -49,5 +49,18 @@ toast.show(
 );
 ```
 
+| Field | Type | Description |
+| --- | --- | --- |
+| message |	Widget |	Main toast content |
+| icon |	Widget? |	Optional leading icon |
+| alignment |	Alignment	Toast | position (top, bottom, etc.) |
+| padding |	EdgeInsetsGeometry? |	Outer toast padding |
+| backgroundColor |	Color? |	Toast background |
+| elevation |	double? |	Shadow elevation |
+| autoDismiss |	bool |	Whether to auto-dismiss |
+| dismissInSeconds |	int? |	How long before auto-dismiss |
+| closeItem |	Widget? |	Custom close button (top-right) |
+| borderRadius |	BorderRadius? |	Corner roundness |
+
 ## 🧪 Example App
 ## Check out the example/ folder for a complete working demo.
