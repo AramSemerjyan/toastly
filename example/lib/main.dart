@@ -130,8 +130,8 @@ class _MyHomePageState extends State<MyHomePage>
                 shouldShowProgressBar: true,
                 progressBarColor: Colors.deepPurple,
                 dismissInSeconds: 5,
-                type: ToastAnimationType.slideDown,
-                alignment: Alignment.topCenter,
+                type: ToastAnimationType.slideUp,
+                alignment: Alignment.bottomCenter,
               ));
             }),
           ],

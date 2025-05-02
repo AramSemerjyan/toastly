@@ -87,7 +87,7 @@ class Toastly {
                 height: config.progressBarHeight ?? 4,
                 decoration: BoxDecoration(
                   color: (config.progressBarColor ?? Colors.black)
-                      .withOpacity(0.1),
+                      .withValues(alpha: 0.1),
                   borderRadius:
                       config.borderRadius ?? BorderRadius.circular(20),
                 ),

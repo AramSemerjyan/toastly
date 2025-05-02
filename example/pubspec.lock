@@ -193,7 +193,7 @@ packages:
     source: hosted
     version: "0.7.3"
   toastly:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: ".."
       relative: true
