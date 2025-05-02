@@ -33,20 +33,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  late final _animationController = AnimationController(
-    duration: const Duration(seconds: 1),
-    vsync: this,
-  );
-  late final Toastly _toastly =
-      Toastly(animationController: _animationController);
-
   @override
   void initState() {
     super.initState();
+
+    Toastly.init(vsync: this);
   }
 
   void _show(ToastlyConfig config) {
-    _toastly.show(context: context, config: config);
+    Toastly.instance.show(context: context, config: config);
   }
 
   Widget _button(String label, VoidCallback onPressed) {
@@ -105,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage>
                 autoDismiss: false,
                 closeItem: IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () => _toastly.hide(),
+                  onPressed: () => Toastly.instance.hide(),
                 ),
                 backgroundColor: Colors.orange[50],
                 animationType: ToastAnimationType.scaleIn,

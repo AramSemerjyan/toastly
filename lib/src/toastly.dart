@@ -5,17 +5,38 @@ import 'package:flutter/material.dart';
 import 'toastly_config.dart';
 
 class Toastly {
-  final AnimationController animationController;
-  late final Animation<double> animation =
-      CurveTween(curve: Curves.fastOutSlowIn).animate(animationController);
+  static Toastly? _instance;
+  static Toastly get instance => _instance!;
+
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
   OverlayEntry? _currentOverlayEntry;
   Timer? _timer;
 
   VoidCallback? onDismiss;
 
-  Toastly({required this.animationController}) {
-    animationController.duration = const Duration(milliseconds: 300);
-    animationController.reverseDuration = const Duration(milliseconds: 300);
+  Toastly._(TickerProvider? vsync, AnimationController? animationController) {
+    if (animationController != null) {
+      _animationController = animationController;
+    } else if (vsync != null) {
+      _animationController = AnimationController(
+        vsync: vsync,
+        duration: const Duration(milliseconds: 300),
+        reverseDuration: const Duration(milliseconds: 300),
+      );
+
+      _animation =
+          CurveTween(curve: Curves.fastOutSlowIn).animate(_animationController);
+    } else {
+      throw Exception('vsync or animation controller should be set');
+    }
+  }
+
+  static void init({
+    TickerProvider? vsync,
+    AnimationController? animationController,
+  }) {
+    _instance = Toastly._(vsync, animationController);
   }
 
   void show({
@@ -33,8 +54,8 @@ class Toastly {
     );
 
     Overlay.of(context).insert(_currentOverlayEntry!);
-    animationController.reset();
-    animationController.forward();
+    _animationController.reset();
+    _animationController.forward();
 
     this.onDismiss = onDismiss;
     if (config.autoDismiss) {
@@ -50,7 +71,7 @@ class Toastly {
   }
 
   void _removeOverlay() {
-    animationController.reverse().whenComplete(() {
+    _animationController.reverse().whenComplete(() {
       _currentOverlayEntry?.remove();
       _currentOverlayEntry = null;
       onDismiss?.call();
@@ -147,7 +168,7 @@ class Toastly {
               alignment: config.alignment,
               child: _buildAnimatedToast(
                 animationType: config.animationType,
-                animation: animation,
+                animation: _animation,
                 child: Material(
                   borderRadius:
                       config.borderRadius ?? BorderRadius.circular(20),
