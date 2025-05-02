@@ -27,17 +27,37 @@ dependencies:
 ## 1. Initialize once with an animation controller
 
 ```dart
-late final _animationController = AnimationController(
-  duration: const Duration(seconds: 1),
-  vsync: this,
-);
-late final Toastly _toastly = Toastly(animationController: _animationController);
+class _PageState extends State<Page>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    Toastly.init(vsync: this);
+  }
+}
+```
+
+## or
+
+```dart
+class _PageState extends State<Page>
+    with SingleTickerProviderStateMixin {
+  late final _controller = AnimationController(vsync: this);
+
+  @override
+  void initState() {
+    super.initState();
+
+    Toastly.init(animationController: _controller);
+  }
+}
 ```
 
 ## 2. Show a toast
 
 ```dart
-toast.show(
+Toastly.instance.show(
   context: context,
   config: ToastlyConfig(
     message: const Text('Post saved!'),
