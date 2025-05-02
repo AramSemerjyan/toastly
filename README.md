@@ -24,7 +24,7 @@ dependencies:
 ```
 
 ## 🛠️ Usage
-## 1. Initialize once with vsync
+## 1. Initialize once with `vsync`
 
 ```dart
 class _PageState extends State<Page>
@@ -38,7 +38,7 @@ class _PageState extends State<Page>
 }
 ```
 
-## or animation controller
+## or `AnimationController`
 
 ```dart
 class _PageState extends State<Page>
