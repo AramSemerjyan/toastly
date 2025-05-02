@@ -91,4 +91,4 @@ Toastly.instance.show(
 
 
 ## 🧪 Example App
-## Check out the example/ folder for a complete working demo.
+## Check out the `example` folder for a complete working demo.
