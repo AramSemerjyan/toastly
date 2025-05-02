@@ -49,18 +49,24 @@ toast.show(
 );
 ```
 
-| Field | Type | Description |
-| --- | --- | --- |
-| message |	Widget |	Main toast content |
-| icon |	Widget? |	Optional leading icon |
-| alignment |	Alignment	Toast | position (top, bottom, etc.) |
-| padding |	EdgeInsetsGeometry? |	Outer toast padding |
-| backgroundColor |	Color? |	Toast background |
-| elevation |	double? |	Shadow elevation |
-| autoDismiss |	bool |	Whether to auto-dismiss |
-| dismissInSeconds |	int? |	How long before auto-dismiss |
-| closeItem |	Widget? |	Custom close button (top-right) |
-| borderRadius |	BorderRadius? |	Corner roundness |
+| Field                   | Type                  | Description                                                |
+| ----------------------- | --------------------- | ---------------------------------------------------------- |
+| `message`               | `Widget`              | Main toast content                                         |
+| `icon`                  | `Widget?`             | Optional leading icon                                      |
+| `alignment`             | `Alignment`           | Toast position (top, bottom, center, etc.)                 |
+| `padding`               | `EdgeInsetsGeometry?` | Outer padding of the toast                                 |
+| `backgroundColor`       | `Color?`              | Toast background color                                     |
+| `elevation`             | `double?`             | Shadow elevation beneath the toast                         |
+| `autoDismiss`           | `bool`                | Whether the toast dismisses automatically                  |
+| `dismissInSeconds`      | `int?`                | Number of seconds before dismiss (if enabled)              |
+| `closeItem`             | `Widget?`             | Custom close button (top-right corner)                     |
+| `borderRadius`          | `BorderRadius?`       | Corner rounding of the toast                               |
+| `type`                  | `ToastAnimationType`  | Toast animation: `fade`, `slideUp`, `slideDown`, `scaleIn` |
+| `shouldShowProgressBar` | `bool`                | Whether to show animated progress bar                      |
+| `progressBarColor`      | `Color?`              | Color of the progress bar (if shown)                       |
+| `progressBarHeight`     | `double?`             | Height of the progress bar                                 |
+| `progressBarAlignment`  | `Alignment?`          | Alignment of the progress bar inside the toast             |
+
 
 ## 🧪 Example App
 ## Check out the example/ folder for a complete working demo.
