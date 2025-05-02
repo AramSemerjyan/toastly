@@ -11,6 +11,8 @@ class Toastly {
   OverlayEntry? _currentOverlayEntry;
   Timer? _timer;
 
+  VoidCallback? onDismiss;
+
   Toastly({required this.animationController}) {
     animationController.duration = const Duration(milliseconds: 300);
     animationController.reverseDuration = const Duration(milliseconds: 300);
@@ -20,6 +22,7 @@ class Toastly {
     required ToastlyConfig config,
     required BuildContext context,
     VoidCallback? onToastTap,
+    VoidCallback? onDismiss,
   }) {
     _currentOverlayEntry?.remove();
     _currentOverlayEntry = null;
@@ -33,6 +36,7 @@ class Toastly {
     animationController.reset();
     animationController.forward();
 
+    this.onDismiss = onDismiss;
     if (config.autoDismiss) {
       _setTimer(config);
     } else {
@@ -49,6 +53,8 @@ class Toastly {
     animationController.reverse().whenComplete(() {
       _currentOverlayEntry?.remove();
       _currentOverlayEntry = null;
+      onDismiss?.call();
+      onDismiss = null;
     });
   }
 
@@ -65,6 +71,32 @@ class Toastly {
           onPressed: hide,
           icon: Icon(Icons.close),
         );
+  }
+
+  Widget _buildProgressBar(ToastlyConfig config) {
+    return Positioned.fill(
+      child: Align(
+        alignment: config.progressBarAlignment ?? Alignment.bottomLeft,
+        child: TweenAnimationBuilder<double>(
+          tween: Tween(begin: 1.0, end: 0.0),
+          duration: Duration(seconds: config.dismissInSeconds ?? 2),
+          builder: (context, value, child) {
+            return FractionallySizedBox(
+              widthFactor: value,
+              child: Container(
+                height: config.progressBarHeight ?? 4,
+                decoration: BoxDecoration(
+                  color: (config.progressBarColor ?? Colors.black)
+                      .withOpacity(0.1),
+                  borderRadius:
+                      config.borderRadius ?? BorderRadius.circular(20),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 
   OverlayEntry _buildOverlay(ToastlyConfig config, {VoidCallback? onToastTap}) {
@@ -84,20 +116,27 @@ class Toastly {
                       ? 0
                       : (config.elevation ?? 2),
                   color: config.backgroundColor ?? Colors.white,
-                  child: GestureDetector(
-                    onTap: onToastTap,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (config.icon != null) config.icon!,
-                          if (config.icon != null) const SizedBox(width: 8),
-                          config.message,
-                          if (!config.autoDismiss) _buildCloseItem(config),
-                        ],
+                  clipBehavior: Clip.hardEdge,
+                  child: Stack(
+                    children: [
+                      GestureDetector(
+                        onTap: onToastTap,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (config.icon != null) config.icon!,
+                              if (config.icon != null) const SizedBox(width: 8),
+                              config.message,
+                              if (!config.autoDismiss) _buildCloseItem(config),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      if (config.autoDismiss && config.shouldShowProgressBar)
+                        _buildProgressBar(config),
+                    ],
                   ),
                 ),
               ),

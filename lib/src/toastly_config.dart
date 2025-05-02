@@ -11,6 +11,10 @@ abstract class ToastlyConfigInterface {
   Widget? get closeItem;
   int? get dismissInSeconds;
   BorderRadius? get borderRadius;
+  bool get shouldShowProgressBar;
+  Color? get progressBarColor;
+  double? get progressBarHeight;
+  Alignment? get progressBarAlignment;
 }
 
 class ToastlyConfig implements ToastlyConfigInterface {
@@ -34,10 +38,19 @@ class ToastlyConfig implements ToastlyConfigInterface {
   int? dismissInSeconds;
   @override
   BorderRadius? borderRadius;
+  @override
+  bool shouldShowProgressBar;
+  @override
+  Color? progressBarColor;
+  @override
+  double? progressBarHeight;
+  @override
+  Alignment? progressBarAlignment;
 
   ToastlyConfig({
     required this.message,
     this.autoDismiss = true,
+    this.shouldShowProgressBar = false,
     this.alignment = Alignment.bottomCenter,
     this.icon,
     this.backgroundColor,
@@ -46,5 +59,8 @@ class ToastlyConfig implements ToastlyConfigInterface {
     this.closeItem,
     this.dismissInSeconds,
     this.borderRadius,
+    this.progressBarColor,
+    this.progressBarHeight,
+    this.progressBarAlignment,
   });
 }

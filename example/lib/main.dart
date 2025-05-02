@@ -115,32 +115,35 @@ class _MyHomePageState extends State<MyHomePage>
               ));
             }),
             _button('Fully Styled Toast', () {
-              _showToast(ToastlyConfig(
-                icon: const Icon(
-                  Icons.info_outline,
-                  color: Colors.deepPurple,
-                ),
-                message: Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text('Custom Design',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-                    ],
+              _showToast(
+                ToastlyConfig(
+                  icon: const Icon(
+                    Icons.info_outline,
+                    color: Colors.deepPurple,
                   ),
+                  message: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Text('Custom Design',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
+                      ],
+                    ),
+                  ),
+                  alignment: Alignment.bottomLeft,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  backgroundColor: Colors.deepPurple.shade50,
+                  borderRadius: BorderRadius.circular(16),
+                  dismissInSeconds: 4,
+                  shouldShowProgressBar: true,
                 ),
-                alignment: Alignment.bottomLeft,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 16,
-                ),
-                backgroundColor: Colors.deepPurple.shade50,
-                borderRadius: BorderRadius.circular(16),
-                dismissInSeconds: 4,
-              ));
+              );
             }),
           ],
         ),
