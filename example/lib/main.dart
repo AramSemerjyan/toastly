@@ -45,14 +45,8 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
   }
 
-  void _showToast(ToastlyConfig config) {
-    _toastly.show(
-      config: config,
-      context: context,
-      onToastTap: () {
-        _toastly.hide();
-      },
-    );
+  void _show(ToastlyConfig config) {
+    _toastly.show(context: context, config: config);
   }
 
   Widget _button(String label, VoidCallback onPressed) {
@@ -65,86 +59,80 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Toastly Demo')),
+      appBar: AppBar(title: const Text('Toastly Example')),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            _button('Basic Toast', () {
-              _showToast(ToastlyConfig(
-                message: const Text('Hello from Toastly!'),
+            _button('Fade Animation (default)', () {
+              _show(ToastlyConfig(
+                message: const Text('This is a fade toast'),
+                type: ToastAnimationType.fade,
               ));
             }),
-            _button('Custom Icon', () {
-              _showToast(ToastlyConfig(
-                message: const Text('Saved successfully'),
-                icon: const Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                ),
+            _button('Slide Up Animation', () {
+              _show(ToastlyConfig(
+                message: const Text('Sliding up!'),
+                type: ToastAnimationType.slideUp,
               ));
             }),
-            _button('Top Aligned', () {
-              _showToast(ToastlyConfig(
-                message: const Text('This appears at the top'),
+            _button('Slide Down Animation', () {
+              _show(ToastlyConfig(
+                message: const Text('Sliding down!'),
                 alignment: Alignment.topCenter,
+                type: ToastAnimationType.slideDown,
               ));
             }),
-            _button('Persistent with Close Item', () {
-              _showToast(ToastlyConfig(
+            _button('Scale Animation (default)', () {
+              _show(ToastlyConfig(
+                message: const Text('Pop in!'),
+                type: ToastAnimationType.scaleIn,
+              ));
+            }),
+            _button('With Icon and Progress Bar', () {
+              _show(ToastlyConfig(
+                message: const Text('Saving...'),
+                icon: const Icon(Icons.download),
+                shouldShowProgressBar: true,
+                progressBarColor: Colors.blueAccent,
+                type: ToastAnimationType.slideUp,
+                dismissInSeconds: 4,
+              ));
+            }),
+            _button('Persistent with Close Button', () {
+              _show(ToastlyConfig(
+                message: const Text('This won’t auto-dismiss'),
                 autoDismiss: false,
-                message: const Text('Manually dismiss me'),
                 closeItem: IconButton(
                   icon: const Icon(Icons.close),
-                  onPressed: () {
-                    _toastly.hide();
-                  },
+                  onPressed: () => _toastly.hide(),
                 ),
-              ));
-            }),
-            _button('Custom Duration (5s)', () {
-              _showToast(ToastlyConfig(
-                message: const Text('Will dismiss in 5 seconds'),
-                dismissInSeconds: 5,
-              ));
-            }),
-            _button('Custom Border Radius', () {
-              _showToast(ToastlyConfig(
-                message: const Text('Rounded corners!'),
-                borderRadius: BorderRadius.circular(40),
+                backgroundColor: Colors.orange[50],
+                type: ToastAnimationType.scaleIn,
               ));
             }),
             _button('Fully Styled Toast', () {
-              _showToast(
-                ToastlyConfig(
-                  icon: const Icon(
-                    Icons.info_outline,
-                    color: Colors.deepPurple,
-                  ),
-                  message: Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: const [
-                        Text('Custom Design',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text(
-                            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."),
-                      ],
-                    ),
-                  ),
-                  alignment: Alignment.bottomCenter,
-                  type: ToastAnimationType.slideUp,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 16,
-                  ),
-                  backgroundColor: Colors.deepPurple.shade50,
-                  borderRadius: BorderRadius.circular(16),
-                  dismissInSeconds: 4,
-                  shouldShowProgressBar: true,
+              _show(ToastlyConfig(
+                icon: const Icon(Icons.info_outline, color: Colors.deepPurple),
+                message: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text('Styled Toast',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text('Multiline, icon, bar, and animation.'),
+                  ],
                 ),
-              );
+                backgroundColor: Colors.deepPurple.shade50,
+                borderRadius: BorderRadius.circular(16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                shouldShowProgressBar: true,
+                progressBarColor: Colors.deepPurple,
+                dismissInSeconds: 5,
+                type: ToastAnimationType.slideDown,
+                alignment: Alignment.topCenter,
+              ));
             }),
           ],
         ),
