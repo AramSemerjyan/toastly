@@ -22,7 +22,7 @@ abstract class ToastlyConfigInterface {
   Color? get progressBarColor;
   double? get progressBarHeight;
   Alignment? get progressBarAlignment;
-  ToastAnimationType get type;
+  ToastAnimationType get animationType;
 }
 
 class ToastlyConfig implements ToastlyConfigInterface {
@@ -55,11 +55,11 @@ class ToastlyConfig implements ToastlyConfigInterface {
   @override
   Alignment? progressBarAlignment;
   @override
-  ToastAnimationType type;
+  ToastAnimationType animationType;
 
   ToastlyConfig({
     required this.message,
-    this.type = ToastAnimationType.scaleIn,
+    this.animationType = ToastAnimationType.scaleIn,
     this.autoDismiss = true,
     this.shouldShowProgressBar = false,
     this.alignment = Alignment.bottomCenter,

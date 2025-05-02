@@ -146,7 +146,7 @@ class Toastly {
             child: Align(
               alignment: config.alignment,
               child: _buildAnimatedToast(
-                animationType: config.type,
+                animationType: config.animationType,
                 animation: animation,
                 child: Material(
                   borderRadius:

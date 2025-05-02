@@ -67,26 +67,26 @@ class _MyHomePageState extends State<MyHomePage>
             _button('Fade Animation (default)', () {
               _show(ToastlyConfig(
                 message: const Text('This is a fade toast'),
-                type: ToastAnimationType.fade,
+                animationType: ToastAnimationType.fade,
               ));
             }),
             _button('Slide Up Animation', () {
               _show(ToastlyConfig(
                 message: const Text('Sliding up!'),
-                type: ToastAnimationType.slideUp,
+                animationType: ToastAnimationType.slideUp,
               ));
             }),
             _button('Slide Down Animation', () {
               _show(ToastlyConfig(
                 message: const Text('Sliding down!'),
                 alignment: Alignment.topCenter,
-                type: ToastAnimationType.slideDown,
+                animationType: ToastAnimationType.slideDown,
               ));
             }),
             _button('Scale Animation (default)', () {
               _show(ToastlyConfig(
                 message: const Text('Pop in!'),
-                type: ToastAnimationType.scaleIn,
+                animationType: ToastAnimationType.scaleIn,
               ));
             }),
             _button('With Icon and Progress Bar', () {
@@ -95,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage>
                 icon: const Icon(Icons.download),
                 shouldShowProgressBar: true,
                 progressBarColor: Colors.blueAccent,
-                type: ToastAnimationType.slideUp,
+                animationType: ToastAnimationType.slideUp,
                 dismissInSeconds: 4,
               ));
             }),
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage>
                   onPressed: () => _toastly.hide(),
                 ),
                 backgroundColor: Colors.orange[50],
-                type: ToastAnimationType.scaleIn,
+                animationType: ToastAnimationType.scaleIn,
               ));
             }),
             _button('Fully Styled Toast', () {
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage>
                 shouldShowProgressBar: true,
                 progressBarColor: Colors.deepPurple,
                 dismissInSeconds: 5,
-                type: ToastAnimationType.slideUp,
+                animationType: ToastAnimationType.slideUp,
                 alignment: Alignment.bottomCenter,
               ));
             }),
