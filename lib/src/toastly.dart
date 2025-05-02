@@ -4,8 +4,18 @@ import 'package:flutter/material.dart';
 
 import 'toastly_config.dart';
 
+/// A singleton toast manager for showing customizable, animated overlays.
+///
+/// Use [Toastly.init] once in your app to initialize the instance with a
+/// [TickerProvider] or a custom [AnimationController].
+///
+/// Then, call [Toastly.instance.show] to display a toast.
 class Toastly {
   static Toastly? _instance;
+
+  /// Returns the global singleton instance of [Toastly].
+  ///
+  /// You must call [Toastly.init] before using this getter.
   static Toastly get instance => _instance!;
 
   late final AnimationController _animationController;
@@ -15,6 +25,7 @@ class Toastly {
 
   VoidCallback? onDismiss;
 
+  /// Internal constructor. Use [init] to create the instance.
   Toastly._(TickerProvider? vsync, AnimationController? animationController) {
     if (animationController != null) {
       _animationController = animationController;
@@ -29,6 +40,12 @@ class Toastly {
         CurveTween(curve: Curves.fastOutSlowIn).animate(_animationController);
   }
 
+  /// Initializes the [Toastly] singleton.
+  ///
+  /// You must call this before accessing [instance].
+  ///
+  /// Provide either a [vsync] or an [animationController]. If both are provided,
+  /// [animationController] takes precedence.
   static void init({
     TickerProvider? vsync,
     AnimationController? animationController,
@@ -36,6 +53,10 @@ class Toastly {
     _instance = Toastly._(vsync, animationController);
   }
 
+  /// Displays a toast overlay with the given [config] in the provided [context].
+  ///
+  /// Use [onToastTap] to handle tap events on the toast.
+  /// Use [onDismiss] to handle manual or timed dismissal.
   void show({
     required ToastlyConfig config,
     required BuildContext context,
