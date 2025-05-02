@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+enum ToastAnimationType {
+  fade,
+  slideUp,
+  slideDown,
+  scaleIn,
+}
+
 abstract class ToastlyConfigInterface {
   Widget get message;
   Alignment get alignment;
@@ -15,6 +22,7 @@ abstract class ToastlyConfigInterface {
   Color? get progressBarColor;
   double? get progressBarHeight;
   Alignment? get progressBarAlignment;
+  ToastAnimationType get type;
 }
 
 class ToastlyConfig implements ToastlyConfigInterface {
@@ -46,9 +54,12 @@ class ToastlyConfig implements ToastlyConfigInterface {
   double? progressBarHeight;
   @override
   Alignment? progressBarAlignment;
+  @override
+  ToastAnimationType type;
 
   ToastlyConfig({
     required this.message,
+    this.type = ToastAnimationType.scaleIn,
     this.autoDismiss = true,
     this.shouldShowProgressBar = false,
     this.alignment = Alignment.bottomCenter,

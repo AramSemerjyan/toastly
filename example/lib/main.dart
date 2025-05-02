@@ -133,7 +133,8 @@ class _MyHomePageState extends State<MyHomePage>
                       ],
                     ),
                   ),
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment.bottomCenter,
+                  type: ToastAnimationType.slideUp,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 16,

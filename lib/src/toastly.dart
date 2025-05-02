@@ -99,6 +99,44 @@ class Toastly {
     );
   }
 
+  Widget _buildAnimatedToast({
+    required Widget child,
+    required Animation<double> animation,
+    required ToastAnimationType animationType,
+  }) {
+    switch (animationType) {
+      case ToastAnimationType.fade:
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+
+      case ToastAnimationType.slideUp:
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 2),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+
+      case ToastAnimationType.slideDown:
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, -2),
+            end: Offset.zero,
+          ).animate(animation),
+          child: child,
+        );
+
+      case ToastAnimationType.scaleIn:
+        return ScaleTransition(
+          scale: animation,
+          child: child,
+        );
+    }
+  }
+
   OverlayEntry _buildOverlay(ToastlyConfig config, {VoidCallback? onToastTap}) {
     return OverlayEntry(
       builder: (context) {
@@ -107,8 +145,9 @@ class Toastly {
             padding: config.padding ?? const EdgeInsets.all(20),
             child: Align(
               alignment: config.alignment,
-              child: FadeTransition(
-                opacity: animation,
+              child: _buildAnimatedToast(
+                animationType: config.type,
+                animation: animation,
                 child: Material(
                   borderRadius:
                       config.borderRadius ?? BorderRadius.circular(20),
