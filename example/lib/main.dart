@@ -37,11 +37,17 @@ class _MyHomePageState extends State<MyHomePage>
   void initState() {
     super.initState();
 
-    Toastly.init(vsync: this);
+    Toastly.init(
+      vsync: this,
+      stackMode: ToastlyStackMode.queue,
+    );
   }
 
   void _show(ToastlyConfig config) {
-    Toastly.instance.show(context: context, config: config);
+    Toastly.instance.show(
+      context: context,
+      config: config,
+    );
   }
 
   Widget _button(String label, VoidCallback onPressed) {

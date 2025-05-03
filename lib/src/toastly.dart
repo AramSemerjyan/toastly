@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:toastly/src/queued_toast.dart';
 
 import 'toastly_config.dart';
 
@@ -20,13 +21,20 @@ class Toastly {
 
   late final AnimationController _animationController;
   late final Animation<double> _animation;
+  late final ToastlyStackMode _stackMode;
   OverlayEntry? _currentOverlayEntry;
   Timer? _timer;
 
-  VoidCallback? onDismiss;
+  final List<QueuedToast> _queue = [];
+  QueuedToast? _currentInQueue;
+  bool _isShowing = false;
 
   /// Internal constructor. Use [init] to create the instance.
-  Toastly._(TickerProvider? vsync, AnimationController? animationController) {
+  Toastly._(
+    TickerProvider? vsync,
+    AnimationController? animationController,
+    ToastlyStackMode stackMode,
+  ) {
     if (animationController != null) {
       _animationController = animationController;
     } else if (vsync != null) {
@@ -38,6 +46,7 @@ class Toastly {
     _animationController.reverseDuration = const Duration(milliseconds: 300);
     _animation =
         CurveTween(curve: Curves.fastOutSlowIn).animate(_animationController);
+    _stackMode = stackMode;
   }
 
   /// Initializes the [Toastly] singleton.
@@ -49,8 +58,13 @@ class Toastly {
   static void init({
     TickerProvider? vsync,
     AnimationController? animationController,
+    ToastlyStackMode stackMode = ToastlyStackMode.replace,
   }) {
-    _instance = Toastly._(vsync, animationController);
+    _instance = Toastly._(
+      vsync,
+      animationController,
+      stackMode,
+    );
   }
 
   /// Displays a toast overlay with the given [config] in the provided [context].
@@ -63,24 +77,24 @@ class Toastly {
     VoidCallback? onToastTap,
     VoidCallback? onDismiss,
   }) {
-    _removeOverlay();
+    if (_stackMode == ToastlyStackMode.queue) {
+      _queue.add(QueuedToast(
+        config: config,
+        context: context,
+        onTap: onToastTap,
+        onDismiss: onDismiss,
+      ));
 
-    _currentOverlayEntry = _buildOverlay(
-      config,
-      onToastTap: onToastTap,
-    );
-
-    Overlay.of(context).insert(_currentOverlayEntry!);
-    _animationController.reset();
-    _animationController.forward();
-
-    this.onDismiss = onDismiss;
-
-    if (config.autoDismiss) {
-      _setTimer(config);
-    } else {
-      _timer?.cancel();
+      if (!_isShowing) _showNextInQueue();
+      return;
     }
+
+    _displayToast(
+      config,
+      context,
+      onToastTap,
+      onDismiss,
+    );
   }
 
   void hide() {
@@ -99,8 +113,10 @@ extension ToastlyActionExt on Toastly {
 
   void _reverse() {
     _animationController.reverse().whenComplete(() {
-      onDismiss?.call();
-      onDismiss = null;
+      _removeOverlay();
+      _currentInQueue?.onDismiss?.call();
+      _isShowing = false;
+      _showNextInQueue();
     });
   }
 
@@ -109,6 +125,39 @@ extension ToastlyActionExt on Toastly {
     _timer = Timer(Duration(seconds: config.dismissInSeconds ?? 2), () {
       _reverse();
     });
+  }
+
+  void _showNextInQueue() {
+    if (_queue.isEmpty) return;
+
+    final next = _queue.removeAt(0);
+    _currentInQueue = next;
+    _isShowing = true;
+    _displayToast(
+      next.config,
+      next.context,
+      next.onTap,
+      next.onDismiss,
+    );
+  }
+
+  void _displayToast(
+    ToastlyConfig config,
+    BuildContext context,
+    VoidCallback? onToastTap,
+    VoidCallback? onDismiss,
+  ) {
+    _removeOverlay();
+    _currentOverlayEntry = _buildOverlay(config, onToastTap: onToastTap);
+    Overlay.of(context).insert(_currentOverlayEntry!);
+    _animationController.reset();
+    _animationController.forward();
+
+    if (config.autoDismiss) {
+      _setTimer(config);
+    } else {
+      _timer?.cancel();
+    }
   }
 }
 

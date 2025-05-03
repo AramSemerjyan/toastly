@@ -7,6 +7,14 @@ enum ToastAnimationType {
   scaleIn,
 }
 
+enum ToastlyStackMode {
+  /// default: Replace previous toast with new one
+  replace,
+
+  /// Queue all toasts and show them one after another
+  queue,
+}
+
 /// The interface that defines the configurable properties of a toast in [Toastly].
 abstract class ToastlyConfigInterface {
   /// The main widget displayed in the toast.
