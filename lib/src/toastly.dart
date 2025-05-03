@@ -208,7 +208,11 @@ extension TostlyWidgetExt on Toastly {
       builder: (context) {
         return SafeArea(
           child: Padding(
-            padding: config.padding ?? const EdgeInsets.all(20),
+            padding: (config.padding ??
+                    const EdgeInsets.only(bottom: 20, left: 20, right: 20))
+                .add(EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            )),
             child: Align(
               alignment: config.alignment,
               child: _buildAnimatedToast(
