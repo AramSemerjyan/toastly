@@ -54,6 +54,25 @@ class _PageState extends State<Page>
 }
 ```
 
+## The default `stackMode` is `ToastlyStackMode.replace`, where each new toast replaces the previous one. You can also use `ToastlyStackMode.queue`, which adds each new toast to a queue and displays them one by one.
+
+```dart
+class _PageState extends State<Page>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    Toastly.init(
+      vsync: this,
+      stackMode: ToastlyStackMode.queue,
+    );
+  }
+}
+```
+
+![Screen Recording 2025-05-03 at 14 06 18](https://github.com/user-attachments/assets/5a020a8f-4c80-445f-b240-f0abbf6406a3)
+
 ## 2. Show a toast
 
 ```dart
