@@ -1,6 +1,6 @@
 name: toastly
 description: "A lightweight toast utility for Flutter apps with customizable icon, message, and animation."
-version: 0.0.1
+version: 0.2.0
 homepage: https://github.com/AramSemerjyan/toastly
 repository: https://github.com/AramSemerjyan/toastly
 issue_tracker: https://github.com/AramSemerjyan/toastly/issues
